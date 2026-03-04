@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --container-max-width: 1280px;
+
+  /* Premium Color Palette */
+  --color-primary: #0066FF;
+  --color-primary-dark: #0052CC;
+  --color-accent: #FF8A00;
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-text-main: #0F172A;
+  --color-text-muted: #64748B;
+
+  /* Shadows */
+  --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+  /* Radius */
+  --radius-premium: 24px;
+}
+
+@layer base {
+  body {
+    @apply m-0 bg-background text-text-main antialiased selection:bg-primary/10 selection:text-primary;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply tracking-tight font-semibold;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-glass;
+  }
+
+  .content-container {
+    @apply w-full max-w-(--container-max-width) mx-auto px-6 md:px-8 lg:px-12;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .section-padding {
+    @apply py-20 lg:py-32;
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

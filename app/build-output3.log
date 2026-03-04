@@ -1,0 +1,29 @@
+npm warn Unknown user config "/" (proxy:https:/). This will stop working in the next major version of npm.
+
+> build
+> vite build
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+[plugin vite:resolve] Module "node:async_hooks" has been externalized for browser compatibility, imported by "F:/rdm/rdm_tanstack2/app/node_modules/@tanstack/start-storage-context/dist/esm/async-local-storage.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+[32mÔ£ô[39m 6991 modules transformed.
+Ô£ù Build failed in 24.78s
+error during build:
+node_modules/@tanstack/start-storage-context/dist/esm/async-local-storage.js (1:9): "AsyncLocalStorage" is not exported by "__vite-browser-external", imported by "node_modules/@tanstack/start-storage-context/dist/esm/async-local-storage.js".
+file: F:/rdm/rdm_tanstack2/app/node_modules/@tanstack/start-storage-context/dist/esm/async-local-storage.js:1:9
+
+1: import { AsyncLocalStorage } from "node:async_hooks";
+            ^
+2: const GLOBAL_STORAGE_KEY = /* @__PURE__ */ Symbol.for("tanstack-start:start-storage-context");
+3: const globalObj = globalThis;
+
+    at getRollupError (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/parseAst.js:402:41)
+    at error (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/parseAst.js:398:42)
+    at Module.error (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:17040:16)
+    at Module.traceVariable (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:17452:29)
+    at ModuleScope.findVariable (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:15070:39)
+    at TrackingScope.findVariable (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:5673:38)
+    at BlockScope.findVariable (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:5673:38)
+    at Identifier.bind (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:5447:40)
+    at NewExpression.bind (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)
+    at AssignmentExpression.bind (file:///F:/rdm/rdm_tanstack2/app/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)

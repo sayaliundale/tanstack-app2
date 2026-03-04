@@ -1,0 +1,5 @@
+export * from './PlatformHero'
+export * from './PlatformIntroduction'
+export * from './PlatformPhilosophy'
+export * from './PlatformFeatures'
+export * from './PlatformBenefits'

@@ -1,0 +1,163 @@
+import { useState } from 'react'
+import { motion } from 'motion/react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Spinner } from '@/components/ui/spinner'
+import { WarningCircle } from '@phosphor-icons/react'
+
+interface ContactFormProps {
+    onSuccess: () => void
+}
+
+export function ContactForm({ onSuccess }: ContactFormProps) {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+    })
+    const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState<'idle' | 'error'>('idle')
+    const [errorMessage, setErrorMessage] = useState('')
+
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        setFormData((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }))
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        setStatus('idle')
+        setErrorMessage('')
+
+        try {
+            // Simulate network request for the demo UI
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+
+            // Usually you would do: await fetch('/api/contact', { ... })
+            // Here we just mock the success so the UI shows the "Thank You" message
+
+            onSuccess()
+            setFormData({ name: '', email: '', subject: '', message: '' })
+        } catch (error) {
+            console.error('Submission error:', error)
+            setStatus('error')
+            setErrorMessage(
+                error instanceof Error ? error.message : 'Something went wrong',
+            )
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+        >
+            <Card className="rounded-[2.5rem] border-slate-100 shadow-premium overflow-hidden bg-white">
+                <CardHeader className="p-8 md:p-12 border-b border-slate-50 bg-slate-50/50">
+                    <CardTitle className="text-3xl font-black text-slate-900 font-display">Send us a message</CardTitle>
+                    <CardDescription className="text-lg font-light text-slate-500 max-w-md">
+                        Fill out the form below and our team will get back to you within 24 hours.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="p-8 md:p-12">
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-3">
+                                <Label htmlFor="name" className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Name</Label>
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    placeholder="Your full name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                    className="h-14 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white focus:border-primary transition-all shadow-sm focus:ring-4 focus:ring-primary/5 text-lg pl-6"
+                                />
+                            </div>
+                            <div className="space-y-3">
+                                <Label htmlFor="email" className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Email</Label>
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="you@company.com"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                    className="h-14 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white focus:border-primary transition-all shadow-sm focus:ring-4 focus:ring-primary/5 text-lg pl-6"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <Label htmlFor="subject" className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Subject</Label>
+                            <Input
+                                id="subject"
+                                name="subject"
+                                placeholder="What is this regarding?"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                required
+                                className="h-14 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white focus:border-primary transition-all shadow-sm focus:ring-4 focus:ring-primary/5 text-lg pl-6"
+                            />
+                        </div>
+
+                        <div className="space-y-3">
+                            <Label htmlFor="message" className="text-sm font-bold text-slate-700 uppercase tracking-widest pl-1">Message</Label>
+                            <Textarea
+                                id="message"
+                                name="message"
+                                placeholder="Tell us more about your inquiry..."
+                                value={formData.message}
+                                onChange={handleChange}
+                                required
+                                className="min-h-[180px] rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white focus:border-primary transition-all shadow-sm focus:ring-4 focus:ring-primary/5 text-lg p-6 resize-none"
+                            />
+                        </div>
+
+                        {status === 'error' && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="bg-red-50 text-red-600 p-6 rounded-2xl flex items-center gap-4 border border-red-100"
+                            >
+                                <WarningCircle size={24} weight="bold" />
+                                <p className="font-medium">{errorMessage}</p>
+                            </motion.div>
+                        )}
+
+                        <div className="pt-4">
+                            <Button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full h-16 text-xl font-bold rounded-2xl bg-primary hover:bg-primary-dark text-white shadow-lg hover:shadow-primary/25 hover:-translate-y-1 active:scale-[0.98] transition-all"
+                            >
+                                {loading ? (
+                                    <div className="flex items-center gap-3">
+                                        <Spinner className="text-white h-6 w-6" />
+                                        <span>Sending...</span>
+                                    </div>
+                                ) : (
+                                    'Send Message'
+                                )}
+                            </Button>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
+        </motion.div>
+    )
+}
+
