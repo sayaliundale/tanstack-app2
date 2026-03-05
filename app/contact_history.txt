@@ -1,0 +1,50 @@
+commit 32daeb2ae88bac05c68600afdc19c652665fb558
+Author: sayali <sayaliundale@gmail.com>
+Date:   Wed Mar 4 17:50:44 2026 +0530
+
+    Fix build: added index.html and updated scripts
+
+diff --git a/app/src/routes/contact.tsx b/app/src/routes/contact.tsx
+new file mode 100644
+index 0000000..5e0b3aa
+--- /dev/null
++++ b/app/src/routes/contact.tsx
+@@ -0,0 +1,38 @@
++import { createFileRoute } from '@tanstack/react-router'
++import { useState } from 'react'
++import { Navbar } from '@/components/layout/Navbar'
++import { Footer } from '@/components/layout/Footer'
++import { ContactHero } from '@/components/contact/ContactHero'
++import { ContactForm } from '@/components/contact/ContactForm'
++import { ContactSuccess } from '@/components/contact/ContactSuccess'
++
++export const Route = createFileRoute('/contact')({
++    component: ContactPage,
++})
++
++function ContactPage() {
++    const [isSuccess, setIsSuccess] = useState(false)
++
++    return (
++        <div className="min-h-screen bg-slate-50/50 flex flex-col">
++            <Navbar />
++
++            <main className="flex-grow pt-32 lg:pt-48 pb-32">
++                <div className="content-container max-w-4xl">
++                    <ContactHero />
++
++                    <div className="max-w-3xl mx-auto">
++                        {isSuccess ? (
++                            <ContactSuccess onReset={() => setIsSuccess(false)} />
++                        ) : (
++                            <ContactForm onSuccess={() => setIsSuccess(true)} />
++                        )}
++                    </div>
++                </div>
++            </main>
++
++            <Footer />
++        </div>
++    )
++}
++
